@@ -1,6 +1,7 @@
 import { ITask } from '@/App'
 import Task from '../Task'
 import styles from './styles.module.css'
+import clipboard from '../../assets/clipboard.svg'
 
 interface Props {
   tasks: ITask[]
@@ -35,6 +36,14 @@ export default function Tasks({ tasks, onDeleteTask, onToggleTask }: Props) {
             onToggleTask={onToggleTask}
           />
         ))}
+
+        {tasks.length === 0 && (
+          <section className={styles.empty_list}>
+            <img src={clipboard} alt="clipboard" />
+            <p>Você ainda não tem tarefas cadastradas</p>
+            <span>Crie tarefas e organize seus itens a fazer</span>
+          </section>
+        )}
       </div>
     </section>
   )

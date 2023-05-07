@@ -48,3 +48,17 @@
   flex-direction: column;
   gap: 0.75rem;
 }
+
+.empty_list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  color: var(--gray-300);
+  margin-top: 64px;
+}
+
+.empty_list p {
+  font-weight: bold;
+}

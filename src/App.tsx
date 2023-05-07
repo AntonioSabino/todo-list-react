@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from './components/Header'
 import NewTask from './components/NewTask'
 import Tasks from './components/Tasks'
@@ -12,6 +12,18 @@ export interface ITask {
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([])
 
+  useEffect(() => {
+    const storageTasks = localStorage.getItem('@todo:tasks')
+    if (storageTasks) {
+      setTasks(JSON.parse(storageTasks))
+    }
+  }, [])
+
+  const saveAndSetTasks = (tasks: ITask[]) => {
+    localStorage.setItem('@todo:tasks', JSON.stringify(tasks))
+    setTasks(tasks)
+  }
+
   const addTask = (text: string) => {
     const newTask = {
       id: crypto.randomUUID(),
@@ -19,13 +31,13 @@ function App() {
       isCompleted: false
     }
 
-    setTasks([...tasks, newTask])
+    saveAndSetTasks([...tasks, newTask])
   }
 
   const deleteTask = (id: string) => {
     const filteredTasks = tasks.filter((task) => task.id !== id)
 
-    setTasks(filteredTasks)
+    saveAndSetTasks(filteredTasks)
   }
 
   const toggleTask = (id: string) => {
@@ -39,7 +51,7 @@ function App() {
       return task
     })
 
-    setTasks(updatedTasks)
+    saveAndSetTasks(updatedTasks)
   }
 
   return (
